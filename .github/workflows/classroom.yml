@@ -1,0 +1,69 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: devopsAssignment.docx
+      id: devopsassignment-docx
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        setup-command: ''
+    - name: arraySum.sh
+      id: arraysum-sh
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        setup-command: ''
+    - name: checkFileExt.sh
+      id: checkfileext-sh
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        setup-command: ''
+    - name: convertTxtToHtml.sh
+      id: converttxttohtml-sh
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        setup-command: ''
+    - name: displayReverse.sh
+      id: displayreverse-sh
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        setup-command: ''
+    - name: readCharacter.sh
+      id: readcharacter-sh
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        setup-command: ''
+    - name: searchTextInFile.sh
+      id: searchtextinfile-sh
+      uses: classroom-resources/autograding-python-grader@v1
+      with:
+        timeout: 10
+        setup-command: ''
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        DEVOPSASSIGNMENT-DOCX_RESULTS: "${{steps.devopsassignment-docx.outputs.result}}"
+        ARRAYSUM-SH_RESULTS: "${{steps.arraysum-sh.outputs.result}}"
+        CHECKFILEEXT-SH_RESULTS: "${{steps.checkfileext-sh.outputs.result}}"
+        CONVERTTXTTOHTML-SH_RESULTS: "${{steps.converttxttohtml-sh.outputs.result}}"
+        DISPLAYREVERSE-SH_RESULTS: "${{steps.displayreverse-sh.outputs.result}}"
+        READCHARACTER-SH_RESULTS: "${{steps.readcharacter-sh.outputs.result}}"
+        SEARCHTEXTINFILE-SH_RESULTS: "${{steps.searchtextinfile-sh.outputs.result}}"
+      with:
+        runners: devopsassignment-docx,arraysum-sh,checkfileext-sh,converttxttohtml-sh,displayreverse-sh,readcharacter-sh,searchtextinfile-sh
